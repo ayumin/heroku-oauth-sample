@@ -18,5 +18,10 @@ class App < Sinatra::Base
     @apps = api.get_apps.body
     erb :index
   end
+
+  error Heroku::API::Errors::Unauthorized do
+    session[:return_to] = request.url
+    redirect to('/auth/heroku')
+  end
 end
 
